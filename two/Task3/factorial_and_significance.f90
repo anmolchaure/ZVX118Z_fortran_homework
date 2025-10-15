@@ -12,7 +12,7 @@ program combined_single_precision
 
 
     print*, "integer overflow"
-    print*, "n                  factorial"
+    print*, "n                  factorial(kind=4)"
 
     do n = 1, 50
         if (n > 1) then
@@ -28,7 +28,7 @@ program combined_single_precision
 
 
     print*, ""
-    print*, "loss of signicance"
+    print*, "loss of signicance (kind =4)"
     print*, " small               big               sum"
 
     do n = 1, 1000

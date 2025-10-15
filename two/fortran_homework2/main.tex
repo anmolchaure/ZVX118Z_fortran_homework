@@ -1,0 +1,165 @@
+\documentclass{homework}
+\usepackage{fancyvrb}
+\usepackage[a4paper,margin=1in]{geometry}
+\author{Anmol Chaure}
+\class{Prof. Michal Kuraz's Intro to Fortran}
+\date{\today}
+\title{Homework 2}
+\address{}
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+
+
+\graphicspath{{./media/}}
+
+\begin{document} \maketitle
+
+\question
+Write a Fortran program that:
+\begin{enumerate}
+    \item Declares two integers of different kinds, e.g. integer(kind=4) and integer(kind=8).
+    \item Computes the factorial n! in a loop from n = 1 upwards.
+    \item Stops when an overflow occurs (e.g. when the value becomes negative or smaller than the previous one).
+    \item Prints the last correct value and the n where overflow happened.
+\end{enumerate}
+
+
+\hfill\break
+
+\begin{sol}
+
+
+{\large \textbf{Observations}}
+
+Every data type, in this case integer has a specified bit sized memory allocated for its value. An \textbf{Integer overflow} occurs when a calculation exceeds this specified allocation it causes the value to wrap around to a smaller number or result in undefined behavior (like \textbf{negative numbers in this case}). In this task integer overflow was demonstrated by taking factorials of two kinds of integer, namely integer \textbf{kind=4} and \textbf{kind=8}, each of them has \textbf{4 bytes (32 bits) and 8 bytes (64)} of memory respectively. 
+
+For \textbf{kind=4, program overflows at 14} by repeating the same result, for \textbf{kind=8, overflows at 21} by resulting in negative numbers. Therefore, precisely demonstrating how memory allocation affects overflow. 
+
+
+\lstinputlisting[language=Fortran, caption={Code to demostrate Integer Overflow}, label=cpr]{code/int_overflow_two_loops.f90}
+
+
+
+\hfill
+
+
+
+\begin{figure}[h!]
+    \noindent
+    \begin{minipage}[t]{0.48\textwidth}
+        \VerbatimInput{media/output.txt}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \VerbatimInput{media/output8.txt}
+    \end{minipage}
+    \caption{Demonstration of integer overflow}
+    \label{fig:comparision of two kinds of integers}
+\end{figure}
+
+
+
+
+\end{sol}
+
+
+\question
+Write a program similar to the in-class example:
+\begin{enumerate}
+    \item Start with big = 1.0d0 and small = 1.0d0.
+    \item In each loop iteration:
+    \begin{itemize}
+         \item compute sum = big + small,
+         \item print small, big, and sum,
+         \item divide small by 2.
+
+    \end{itemize}
+    \item Stop when adding small no longer increases big
+\end{enumerate}
+
+
+\hfill\break
+
+\begin{sol}
+
+
+{\large \textbf{Observations}}
+\hfill
+
+
+Loss of significance is an undesirable effect in calculations using floating-point arithmetic. Computer systems use floating point arithmetic to express fractional numbers. 
+In this code we try to demonstrate the loss of significance or precision. To be exact, the program shows that when adding a very small number(small) to a much larger one(big), the result of their addition stops changing as the system cannot represent the difference in numbers after a certain limit called \textbf{machine epsilon}. This happens due to the finite number of bits available to store floating point numbers which limits precision of real numbers. 
+
+In this case, the limit reaches at , therefore, we can say that it is our machine epsilon. 
+\vfill
+
+
+
+\lstinputlisting[language=Fortran, caption={Code to demostrate Integer Overflow}, label=cpr]{code/loss_of_significance.f90}
+
+
+\end{sol}
+
+
+\question
+Reflect
+\begin{enumerate}
+
+    \item \textbf{What numerical property limits integer types?}
+
+
+    \textcolor{blue}{Integer types are limited by their \textbf{range}, which is determined by the number of bits used to store them. For example, a signed 32-bit integer can represent values from -2,147,483,648 to 2,147,483,647.}
+
+    
+    \vspace{10mm}
+    
+    \item \textbf{What numerical property limits real types?}
+
+    \textcolor{blue}{The numerical properties that limit real types include their \textbf{maximum values and precision}, which are determined by the specific implementation and the number of bits allocated for storage. Typically, single precision real numbers can represent about seven decimal digits, while double precision can represent around fifteen decimal digits}.
+
+    \vspace{10mm}
+    
+    \item \textbf{Which error (overflow or precision loss) is more dangerous for scientific simulations,and why?}
+
+
+
+    \textcolor{blue}{Precision loss is generally more dangerous for scientific simulations because it can lead to significant inaccuracies in calculations, especially when small changes in input can result in large discrepancies in output. Overflow can often be detected and handled, while precision loss may go unnoticed, compromising the reliability of the results.}
+\end{enumerate}
+
+
+
+\newpage
+\vfill
+
+\question 
+Bonus
+
+Implement a single program that performs both experiments sequentially: first integer
+factorial overflow, then real precision loss. Print the number of iterations before overflow
+and before significance loss. Comment how these limits correspond to the bit length of
+the data types used.
+
+\begin{sol}
+
+\begin{figure}[h!]
+    \noindent
+    \begin{minipage}[t]{0.48\textwidth}
+        \VerbatimInput{media/output_both.txt}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \VerbatimInput{media/output_sign.txt}
+    \end{minipage}
+    \caption{Demonstration of integer overflow and loss of significance}
+    \label{fig:comparision of integer flow and loss of significance}
+\end{figure}
+
+    
+\end{sol}
+
+% citations
+%\bibliographystyle{plain}
+%\bibliography{citations}
+
+\end{document}

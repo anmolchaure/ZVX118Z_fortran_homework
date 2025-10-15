@@ -7,15 +7,12 @@ program significance
 
     big = 1.0d0
     small = 1.0d0
-    print*, "for real(kind=8)"
-    print *, "small        ", "big          ", "sum         "
-    print *, "-----------------------------------------"
 
     do i=1,1000
         summ = big+small
         print*, small, big, summ
         if(summ<= big) then
-            print *, 'Addition has no effect', i
+            print *, 'Adding small has no effect on big at iteration', i
             exit
         end if
         small = small/2.0d0
