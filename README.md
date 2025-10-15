@@ -1,4 +1,4 @@
-# ZVX118Z_fortran_homework
+# Fortran Homework
 
 
 ## Git push using bash
